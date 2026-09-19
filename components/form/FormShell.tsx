@@ -19,9 +19,8 @@ import {
 import { Blockers } from "./steps/Blockers";
 import { Contact } from "./steps/Contact";
 import { JobBoard } from "./steps/JobBoard";
-import { JobDescription } from "./steps/JobDescription";
+import { Recommend } from "./steps/Recommend";
 import { Ladder } from "./steps/Ladder";
-import { Permission } from "./steps/Permission";
 import { StatementCards } from "./steps/StatementCards";
 import { StoryText } from "./steps/StoryText";
 import { Unlock } from "./steps/Unlock";
@@ -41,9 +40,7 @@ function toAnswers(s: FormState) {
     q3_experience: s.q3,
     q4_blocker: s.q4,
     q5_experience_text: s.q5,
-    q6_job_title: s.q6Title || null,
-    q6_dream_system: s.q6,
-    testimonial_permission: s.permission,
+    q6_recommendation: s.q6,
   };
 }
 
@@ -215,9 +212,7 @@ export function FormShell() {
       case 6:
         return <StoryText {...props} />;
       case 7:
-        return <JobDescription {...props} />;
-      case 8:
-        return <Permission {...props} />;
+        return <Recommend {...props} />;
       default:
         return <Unlock state={state} submit={submit} onSubmit={onSubmit} />;
     }

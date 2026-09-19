@@ -23,7 +23,7 @@ export default async function InsightsPage({
 
   let list = supabase
     .from("feedback_responses")
-    .select("id,name,business_name,created_at,q2_focus_area,q4_blocker,q5_experience_text,q6_job_title,q6_dream_system,tags")
+    .select("id,name,business_name,created_at,q2_focus_area,q4_blocker,q5_experience_text,q6_recommendation,tags")
     .order("created_at", { ascending: false })
     .limit(LIST_LIMIT);
   if (tag) list = list.contains("tags", [tag]);
@@ -108,7 +108,7 @@ export default async function InsightsPage({
             {(
               [
                 ["q5", "Q5 Experience"],
-                ["q6", "Q6 Dream system"],
+                ["q6", "Q6 Advice to others"],
               ] as const
             ).map(([k, label]) => (
               <Link

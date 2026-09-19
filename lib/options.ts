@@ -105,7 +105,6 @@ export const STEP_NAMES = [
   "Q3 Experience",
   "Q4 Blocker",
   "Q5 In your words",
-  "Q6 The one system",
-  "Permission",
+  "Q6 Advice to others",
   "Submit",
 ] as const;

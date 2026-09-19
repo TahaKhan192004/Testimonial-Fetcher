@@ -54,7 +54,6 @@ export async function POST(req: Request) {
   const { error } = await db.from("feedback_responses").insert({
     ...answers,
     q2_other_text: answers.q2_focus_area === "other" ? (answers.q2_other_text?.trim() ?? null) : null,
-    q6_job_title: answers.q6_job_title?.trim() || null,
     source: src?.trim() || null,
     user_agent: req.headers.get("user-agent")?.slice(0, 300) ?? null,
     submission_ms: elapsedMs ?? null,
@@ -70,7 +69,7 @@ export async function POST(req: Request) {
 
   if (sessionId) {
     await db.from("feedback_drafts").upsert(
-      { session_id: sessionId, completed: true, last_step: 9, max_step: 9, updated_at: new Date().toISOString() },
+      { session_id: sessionId, completed: true, last_step: 8, max_step: 8, updated_at: new Date().toISOString() },
       { onConflict: "session_id" },
     );
   }

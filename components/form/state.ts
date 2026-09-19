@@ -1,11 +1,11 @@
-import type { PermissionKey, Q1Key, Q2Key, Q3Key, Q4Key } from "@/lib/options";
+import type { Q1Key, Q2Key, Q3Key, Q4Key } from "@/lib/options";
 import { emailSchema } from "@/lib/schema";
 
 export const STORAGE_KEY = "asf-feedback-v1";
 export const UNLOCK_KEY = "asf-unlock-v1";
-export const LAST_STEP = 9;
-/** Stages that fill the lock: contact, Q1 to Q6, permission. */
-export const TOTAL_STAGES = 8;
+export const LAST_STEP = 8;
+/** Stages that fill the lock: contact, then Q1 to Q6. */
+export const TOTAL_STAGES = 7;
 
 export type FormState = {
   step: number;
@@ -23,9 +23,7 @@ export type FormState = {
   q3: Q3Key | null;
   q4: Q4Key | null;
   q5: string;
-  q6Title: string;
   q6: string;
-  permission: PermissionKey | null;
 };
 
 export type Action =
@@ -49,9 +47,7 @@ export function initialState(): FormState {
     q3: null,
     q4: null,
     q5: "",
-    q6Title: "",
     q6: "",
-    permission: null,
   };
 }
 
@@ -89,8 +85,6 @@ export function canAdvance(s: FormState, step: number): boolean {
       return s.q5.trim().length >= 10;
     case 7:
       return s.q6.trim().length >= 10;
-    case 8:
-      return s.permission !== null;
     default:
       return false;
   }
@@ -106,7 +100,6 @@ export function progressPercent(s: FormState) {
     s.q4 !== null,
     s.q5.trim().length >= 10,
     s.q6.trim().length >= 10,
-    s.permission !== null,
   ].filter(Boolean).length;
   return Math.round((done / TOTAL_STAGES) * 100);
 }

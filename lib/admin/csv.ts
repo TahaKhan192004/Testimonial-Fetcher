@@ -27,8 +27,7 @@ const COLUMNS: Array<[string, (r: ResponseRow) => unknown]> = [
   ["Q3 Experience", (r) => labelFor(Q3_OPTIONS, r.q3_experience)],
   ["Q4 Blocker", (r) => labelFor(Q4_OPTIONS, r.q4_blocker)],
   ["Q5 In their words", (r) => r.q5_experience_text],
-  ["Q6 Job title", (r) => r.q6_job_title],
-  ["Q6 Dream system", (r) => r.q6_dream_system],
+  ["Q6 Advice to others", (r) => r.q6_recommendation],
   ["Permission", (r) => labelFor(PERMISSION_OPTIONS, r.testimonial_permission)],
   ["Lead status", (r) => labelFor(LEAD_STATUS_OPTIONS, r.lead_status)],
   ["Starred", (r) => (r.starred ? "yes" : "")],
@@ -36,7 +35,7 @@ const COLUMNS: Array<[string, (r: ResponseRow) => unknown]> = [
   ["Source", (r) => r.source],
   ["Flagged", (r) => r.flagged_reason],
   ["Admin notes", (r) => r.admin_notes],
-  ["Suggested system", (r) => r.suggested_system],
+  ["Suggested offer", (r) => r.suggested_system],
 ];
 
 export function toCsv(rows: ResponseRow[]) {

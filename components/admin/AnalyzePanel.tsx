@@ -41,7 +41,7 @@ export function AnalyzePanel({ initial, total }: { initial: InsightRow | null; t
           <p className="text-xs text-cream/50">
             {insight
               ? `Based on ${insight.response_count} responses, run ${formatDate(insight.created_at, true)}${stale ? `. ${total - insight.response_count} newer since.` : "."}`
-              : "Themes, complaints and requested systems from Q5 and Q6."}
+              : "Themes, complaints and what people liked, from Q5 and Q6."}
           </p>
         </div>
         <button
@@ -64,7 +64,7 @@ export function AnalyzePanel({ initial, total }: { initial: InsightRow | null; t
           <div className="grid gap-6 lg:grid-cols-3">
             <List title="Themes" items={r.themes.map((t) => ({ head: t.title, body: t.description, n: t.mentions, extra: t.quotes?.map((q) => `“${q}”`) }))} />
             <List title="Common complaints" items={r.complaints.map((t) => ({ head: t.title, body: t.description, n: t.mentions }))} />
-            <List title="Requested systems" items={r.requested_systems.map((t) => ({ head: t.name, body: t.description, n: t.mentions }))} />
+            <List title="What people liked" items={r.praise.map((t) => ({ head: t.title, body: t.description, n: t.mentions }))} />
           </div>
           {r.offer_ideas.length > 0 && (
             <div>

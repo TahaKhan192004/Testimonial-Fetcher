@@ -22,9 +22,9 @@ export const answersSchema = z
     q3_experience: z.enum(Q3_KEYS),
     q4_blocker: z.enum(Q4_KEYS),
     q5_experience_text: z.string().trim().min(10, "Write at least a sentence").max(3000),
-    q6_job_title: z.string().trim().max(100).optional().nullable(),
-    q6_dream_system: z.string().trim().min(10, "Describe the task in a sentence or two").max(3000),
-    testimonial_permission: z.enum(PERMISSION_KEYS),
+    q6_recommendation: z.string().trim().min(10, "Write at least a sentence").max(3000),
+    // The form no longer asks. New submissions are private until an admin changes it.
+    testimonial_permission: z.enum(PERMISSION_KEYS).default("no"),
   })
   .refine((v) => v.q2_focus_area !== "other" || (v.q2_other_text ?? "").trim().length > 0, {
     message: "Tell us which role",

@@ -10,6 +10,7 @@ import {
   Q4_OPTIONS,
   labelFor,
   type LeadStatus,
+  type PermissionKey,
 } from "@/lib/options";
 import { testimonialText } from "@/lib/testimonial";
 import { formatDate } from "@/lib/utils";
@@ -111,14 +112,15 @@ export function DetailPanel({ row, onChange }: { row: ResponseRow; onChange?: (r
       </section>
 
       <section>
-        <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-cream/45">
-          Q6 The one AI system{current.q6_job_title ? `: ${current.q6_job_title}` : ""}
-        </h3>
+        <h3 className="text-xs font-semibold uppercase tracking-[0.16em] text-cream/45">Q6 What they would tell others</h3>
         <p className="mt-2 whitespace-pre-wrap break-words font-display text-2xl leading-relaxed text-cream">
-          {current.q6_dream_system}
+          {current.q6_recommendation ?? "Not answered"}
         </p>
-        <label htmlFor={`sys-${current.id}`} className="mt-4 block text-xs font-semibold uppercase tracking-[0.16em] text-ring">
-          Suggested system (scoping note)
+      </section>
+
+      <section>
+        <label htmlFor={`sys-${current.id}`} className="block text-xs font-semibold uppercase tracking-[0.16em] text-ring">
+          Suggested offer (internal note)
         </label>
         <textarea
           id={`sys-${current.id}`}
@@ -126,7 +128,7 @@ export function DetailPanel({ row, onChange }: { row: ResponseRow; onChange?: (r
           onChange={(e) => setSuggested(e.target.value)}
           rows={3}
           maxLength={5000}
-          placeholder="What would we build for this? Rough scope, price band, tools."
+          placeholder="What should we offer this person? Service, price band, next step."
           className="mt-1 w-full rounded-xl border border-cream/20 bg-cream/5 p-3 text-sm text-cream placeholder:text-cream/30 focus:border-peach focus:outline-none"
         />
       </section>
@@ -139,7 +141,6 @@ export function DetailPanel({ row, onChange }: { row: ResponseRow; onChange?: (r
         </Answer>
         <Answer label="Q3 Experience">{labelFor(Q3_OPTIONS, current.q3_experience)}</Answer>
         <Answer label="Q4 Blocker">{labelFor(Q4_OPTIONS, current.q4_blocker)}</Answer>
-        <Answer label="Permission">{labelFor(PERMISSION_OPTIONS, current.testimonial_permission)}</Answer>
       </dl>
 
       <section className="space-y-4 rounded-2xl border border-cream/10 bg-cream/[0.04] p-5">
@@ -159,6 +160,25 @@ export function DetailPanel({ row, onChange }: { row: ResponseRow; onChange?: (r
               </option>
             ))}
           </select>
+        </div>
+
+        <div>
+          <label htmlFor={`perm-${current.id}`} className="text-xs font-semibold uppercase tracking-[0.16em] text-cream/45">
+            Permission to share their words
+          </label>
+          <select
+            id={`perm-${current.id}`}
+            value={current.testimonial_permission}
+            onChange={(e) => save({ testimonial_permission: e.target.value as PermissionKey }, true)}
+            className="mt-1 block min-h-11 w-full rounded-xl border border-cream/20 bg-ink px-3 text-cream focus:border-peach focus:outline-none sm:w-64"
+          >
+            {PERMISSION_OPTIONS.map((o) => (
+              <option key={o.key} value={o.key}>
+                {o.label}
+              </option>
+            ))}
+          </select>
+          <p className="mt-1 text-xs text-cream/45">The form no longer asks. Everyone starts as private. Change it after you have asked them.</p>
         </div>
 
         <div>

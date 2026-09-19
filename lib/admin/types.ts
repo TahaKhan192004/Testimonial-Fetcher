@@ -12,8 +12,7 @@ export type ResponseRow = {
   q3_experience: Q3Key;
   q4_blocker: Q4Key;
   q5_experience_text: string;
-  q6_dream_system: string;
-  q6_job_title: string | null;
+  q6_recommendation: string | null;
   testimonial_permission: PermissionKey;
   lead_status: LeadStatus;
   admin_notes: string | null;
@@ -27,14 +26,14 @@ export type ResponseRow = {
 };
 
 export type ResponsePatch = Partial<
-  Pick<ResponseRow, "lead_status" | "starred" | "admin_notes" | "suggested_system" | "tags">
+  Pick<ResponseRow, "lead_status" | "starred" | "admin_notes" | "suggested_system" | "tags" | "testimonial_permission">
 >;
 
 export type InsightResult = {
   summary: string;
   themes: Array<{ title: string; description: string; mentions?: number; quotes?: string[] }>;
   complaints: Array<{ title: string; description: string; mentions?: number }>;
-  requested_systems: Array<{ name: string; description: string; mentions?: number }>;
+  praise: Array<{ title: string; description: string; mentions?: number }>;
   offer_ideas: string[];
 };
 

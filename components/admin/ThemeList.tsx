@@ -14,8 +14,7 @@ export type ThemeItem = {
   q2_focus_area: string;
   q4_blocker: string;
   q5_experience_text: string;
-  q6_job_title: string | null;
-  q6_dream_system: string;
+  q6_recommendation: string | null;
   tags: string[];
 };
 
@@ -40,12 +39,9 @@ export function ThemeList({ items: initial, field }: { items: ThemeItem[]; field
   return (
     <ul className="space-y-4">
       {items.map((it) => {
-        const text = field === "q5" ? it.q5_experience_text : it.q6_dream_system;
+        const text = (field === "q5" ? it.q5_experience_text : it.q6_recommendation) || "Not answered";
         return (
           <li key={it.id} className="rounded-2xl border border-cream/10 bg-cream/[0.04] p-5">
-            {field === "q6" && it.q6_job_title && (
-              <p className="text-xs font-semibold uppercase tracking-[0.16em] text-ring">{it.q6_job_title}</p>
-            )}
             <p className="whitespace-pre-wrap break-words font-display text-xl leading-relaxed text-cream">{text}</p>
             <p className="mt-3 text-xs text-cream/50">
               <Link href={`/admin/responses/${it.id}`} className="text-cream/75 underline underline-offset-4">

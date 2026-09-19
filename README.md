@@ -23,6 +23,8 @@ in an httpOnly cookie, and changing `ADMIN_PASSWORD` signs everyone out. Login a
 
 - `lib/options.ts` is the single source of truth for answer keys and labels. The form, zod schemas, admin charts and CSV all read it. The SQL check constraints must match it.
 - Public submit goes browser to `/api/submit` (honeypot, rate limit, zod, dedupe, insert with the service role). The browser never writes to the database.
+- The form does not ask for testimonial permission. Every submission is saved as private (`testimonial_permission = 'no'`); an admin can change it per person in the response drawer after asking them.
+- Q6 asks what people would tell someone thinking about joining the next challenge (`q6_recommendation`). `supabase/migrations/0002_q6_recommendation.sql` added that column and made the old `q6_dream_system` optional; drop `q6_dream_system` and `q6_job_title` once no old version of the app is running.
 - A repeat email is not an error: the person sees "You already claimed this" and the link again. One submission per email is enforced by a unique index.
 - Submissions faster than 15 seconds are stored with `flagged_reason = 'fast_submission'` rather than dropped.
 - After the password check, the admin pages and API routes use the server-side service role key. Admin edits can only touch the ops columns (`lead_status`, `admin_notes`, `suggested_system`, `tags`, `starred`).

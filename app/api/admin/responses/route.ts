@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import { z } from "zod";
 import { isAdmin } from "@/lib/auth";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { LEAD_STATUS_KEYS } from "@/lib/options";
+import { LEAD_STATUS_KEYS, PERMISSION_KEYS } from "@/lib/options";
 
 export const runtime = "nodejs";
 
@@ -12,6 +12,7 @@ const bodySchema = z.object({
     .object({
       lead_status: z.enum(LEAD_STATUS_KEYS),
       starred: z.boolean(),
+      testimonial_permission: z.enum(PERMISSION_KEYS),
       admin_notes: z.string().max(5000).nullable(),
       suggested_system: z.string().max(5000).nullable(),
       tags: z.array(z.string().trim().min(1).max(40)).max(20),

@@ -83,8 +83,7 @@ const SEARCH_COLUMNS = [
   "email",
   "business_name",
   "q5_experience_text",
-  "q6_dream_system",
-  "q6_job_title",
+  "q6_recommendation",
   "q2_other_text",
   "admin_notes",
 ];
