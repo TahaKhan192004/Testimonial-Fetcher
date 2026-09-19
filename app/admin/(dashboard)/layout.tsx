@@ -3,12 +3,12 @@ import { requireAdmin } from "@/lib/auth";
 
 export const dynamic = "force-dynamic";
 
-/** Auth guard. The proxy runs first, this re-checks admin_users on the server. */
+/** Second check behind the proxy: the admin password cookie must be valid. */
 export default async function DashboardLayout({ children }: { children: React.ReactNode }) {
-  const user = await requireAdmin();
+  await requireAdmin();
   return (
     <div className="min-h-dvh">
-      <AdminNav email={user.email ?? ""} />
+      <AdminNav />
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6">{children}</main>
     </div>
   );

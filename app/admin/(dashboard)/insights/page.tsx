@@ -4,7 +4,7 @@ import { ThemeList, type ThemeItem } from "@/components/admin/ThemeList";
 import { fetchAll } from "@/lib/admin/query";
 import type { InsightRow } from "@/lib/admin/types";
 import { Q2_OPTIONS, Q4_OPTIONS } from "@/lib/options";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { cn } from "@/lib/utils";
 
 export const metadata = { title: "Insights" };
@@ -19,7 +19,7 @@ export default async function InsightsPage({
   const sp = await searchParams;
   const field = sp.field === "q6" ? "q6" : "q5";
   const tag = (sp.tag ?? "").trim().slice(0, 40);
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   let list = supabase
     .from("feedback_responses")

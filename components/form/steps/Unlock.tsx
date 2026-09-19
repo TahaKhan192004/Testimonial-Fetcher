@@ -32,17 +32,17 @@ export function Unlock({ state, submit, onSubmit }: Props) {
           <motion.div key="submit" exit={{ opacity: 0, y: -12 }}>
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-ring">All done</p>
             <h2 className="font-display text-[2rem] leading-[1.08] text-cream sm:text-5xl">
-              One tap to open the lock, {state.name.split(" ")[0]}.
+              Ready to send it, {state.name.split(" ")[0]}?
             </h2>
             <p className="mt-3 text-base leading-relaxed text-cream/65">
-              Your answers are saved as soon as you tap. The link appears right here.
+              Submit your feedback and your free Google Maps Lead Scraper unlocks right here.
             </p>
             <PrimaryButton
               className="mt-8 w-full text-center leading-tight sm:w-auto sm:px-10"
               onClick={onSubmit}
               disabled={submit.status === "submitting"}
             >
-              {submit.status === "submitting" ? "Unlocking..." : "Submit & Get Free Access to the Google Maps Lead Scraper"}
+              {submit.status === "submitting" ? "Unlocking..." : "Submit feedback & claim my free scraper"}
             </PrimaryButton>
             {submit.status === "error" && (
               <p role="alert" className="mt-4 text-sm text-peach">
@@ -56,19 +56,19 @@ export function Unlock({ state, submit, onSubmit }: Props) {
               <LockMeter percent={100} unlocked size={72} showLabel={false} />
             </div>
             <p className="mb-4 text-xs font-semibold uppercase tracking-[0.22em] text-ring">
-              {submit.status === "duplicate" ? "Already claimed" : "Unlocked"}
+              {submit.status === "duplicate" ? "Already sent" : "Reward unlocked"}
             </p>
             <h2 className="font-display text-[2rem] leading-[1.08] text-cream sm:text-5xl">
               {submit.status === "duplicate" ? (
-                <>You already claimed this. Here is your link again.</>
+                <>You already sent your feedback. Here is your link again.</>
               ) : (
                 <>
-                  The Google Maps Lead Scraper is <em className="text-peach">yours</em>.
+                  Thank you, {state.name.split(" ")[0]}. Your reward is <em className="text-peach">unlocked</em>.
                 </>
               )}
             </h2>
             <p className="mt-3 text-base leading-relaxed text-cream/65">
-              Thank you for the honest feedback, {state.name.split(" ")[0]}. Your access is below.
+              Your feedback is saved. Here is your free Google Maps Lead Scraper.
             </p>
             {!submit.accessUrl && (
               <p className="mt-8 text-cream/70">Your feedback is in. We will share the scraper link with you shortly.</p>

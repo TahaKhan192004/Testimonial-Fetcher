@@ -11,8 +11,8 @@ const newsreader = Newsreader({
 const manrope = Manrope({ subsets: ["latin"], variable: "--font-manrope", display: "swap" });
 
 export const metadata: Metadata = {
-  title: "Free Google Maps Lead Scraper | AI Savvy Founders",
-  description: "Give us your feedback on the AI Employee Challenge and unlock the Google Maps Lead Scraper, worth $50, for free.",
+  title: "AI Employee Challenge Feedback | AI Savvy Founders",
+  description: "Tell us how the AI Employee Challenge went. As a thank-you, get the Google Maps Lead Scraper, worth $50, free.",
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
 };
 

@@ -2,7 +2,7 @@ import { FilterBar } from "@/components/admin/FilterBar";
 import { ResponsesTable } from "@/components/admin/ResponsesTable";
 import { PAGE_SIZE, applyFilters, parseFilters } from "@/lib/admin/query";
 import type { ResponseRow } from "@/lib/admin/types";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export const metadata = { title: "Responses" };
 
@@ -12,7 +12,7 @@ export default async function ResponsesPage({
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }) {
   const filters = parseFilters(await searchParams);
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   const from = (filters.page - 1) * PAGE_SIZE;
   const { data, count, error } = await applyFilters(

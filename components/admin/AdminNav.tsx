@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { createClient } from "@/lib/supabase/client";
 import { cn } from "@/lib/utils";
 
 const LINKS = [
@@ -11,12 +10,12 @@ const LINKS = [
   { href: "/admin/insights", label: "Insights" },
 ];
 
-export function AdminNav({ email }: { email: string }) {
+export function AdminNav() {
   const pathname = usePathname();
   const router = useRouter();
 
   const signOut = async () => {
-    await createClient().auth.signOut();
+    await fetch("/api/auth/admin-logout", { method: "POST" });
     router.replace("/admin/login");
     router.refresh();
   };
@@ -46,7 +45,6 @@ export function AdminNav({ email }: { email: string }) {
           })}
         </nav>
         <div className="ml-auto flex items-center gap-3 text-sm text-cream/55">
-          <span className="hidden sm:inline">{email}</span>
           <button type="button" onClick={signOut} className="min-h-10 rounded-full border border-cream/25 px-4 text-cream hover:border-cream/50">
             Sign out
           </button>

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getAdminUser } from "@/lib/auth";
-import { createClient } from "@/lib/supabase/server";
+import { isAdmin } from "@/lib/auth";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { LEAD_STATUS_KEYS } from "@/lib/options";
 
 export const runtime = "nodejs";
@@ -20,9 +20,9 @@ const bodySchema = z.object({
     .refine((p) => Object.keys(p).length > 0, "Empty patch"),
 });
 
-/** Bulk or single update of the operational columns. Runs as the admin, so RLS applies. */
+/** Bulk or single update of the operational columns. Only these columns can be changed, the schema below drops anything else. */
 export async function PATCH(req: Request) {
-  if (!(await getAdminUser())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  if (!(await isAdmin())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const parsed = bodySchema.safeParse(await req.json().catch(() => null));
   if (!parsed.success) return NextResponse.json({ error: "validation", issues: parsed.error.issues }, { status: 400 });
@@ -30,7 +30,7 @@ export async function PATCH(req: Request) {
   const { ids, patch } = parsed.data;
   if (patch.tags) patch.tags = Array.from(new Set(patch.tags.map((t) => t.toLowerCase())));
 
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   const { data, error } = await supabase.from("feedback_responses").update(patch).in("id", ids).select("*");
   if (error) {
     console.error("Update failed", error);

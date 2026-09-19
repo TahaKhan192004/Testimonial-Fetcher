@@ -6,7 +6,7 @@ import { StatCard } from "@/components/admin/StatCard";
 import { TimeSeriesChart } from "@/components/admin/TimeSeriesChart";
 import { fetchAll } from "@/lib/admin/query";
 import type { ResponseRow } from "@/lib/admin/types";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 import {
   ANSWER_FIELDS,
   DONE_FOR_ME_BLOCKERS,
@@ -28,7 +28,7 @@ type Slim = { created_at: string; q1_prior_ai_use: string; q2_focus_area: string
 const pct = (n: number, total: number) => (total ? `${Math.round((n / total) * 100)}%` : "0%");
 
 export default async function OverviewPage() {
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   const weekAgo = new Date(Date.now() - 7 * 86400_000).toISOString();
   const count = (build: (q: ReturnType<typeof base>) => ReturnType<typeof base>) => build(base()).then((r) => r.count ?? 0);
   const base = () => supabase.from("feedback_responses").select("id", { count: "exact", head: true });

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getAdminUser } from "@/lib/auth";
-import { createClient } from "@/lib/supabase/server";
+import { isAdmin } from "@/lib/auth";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { applyFilters, fetchAll, parseFilters } from "@/lib/admin/query";
 import { toCsv } from "@/lib/admin/csv";
 import type { ResponseRow } from "@/lib/admin/types";
@@ -9,10 +9,10 @@ import type { ResponseRow } from "@/lib/admin/types";
 export const runtime = "nodejs";
 
 export async function GET(req: Request) {
-  if (!(await getAdminUser())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  if (!(await isAdmin())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
 
   const { searchParams } = new URL(req.url);
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   const idsParam = searchParams.get("ids");
   let rows: ResponseRow[];

@@ -1,8 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { getAdminUser } from "@/lib/auth";
-import { createClient } from "@/lib/supabase/server";
+import { isAdmin } from "@/lib/auth";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { Q2_OPTIONS, Q4_OPTIONS, labelFor } from "@/lib/options";
 import type { InsightResult } from "@/lib/admin/types";
 
@@ -40,13 +40,13 @@ function extractJson(text: string): InsightResult {
 }
 
 export async function POST(req: Request) {
-  if (!(await getAdminUser())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
+  if (!(await isAdmin())) return NextResponse.json({ error: "unauthorized" }, { status: 401 });
   if (!process.env.ANTHROPIC_API_KEY) {
     return NextResponse.json({ error: "missing_key", message: "ANTHROPIC_API_KEY is not set." }, { status: 501 });
   }
 
   const { force } = z.object({ force: z.boolean().optional() }).parse(await req.json().catch(() => ({})));
-  const supabase = await createClient();
+  const supabase = createAdminClient();
 
   const { count } = await supabase.from("feedback_responses").select("id", { count: "exact", head: true });
   const total = count ?? 0;

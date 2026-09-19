@@ -3,7 +3,7 @@ import { notFound } from "next/navigation";
 import { z } from "zod";
 import { DetailPanel } from "@/components/admin/DetailPanel";
 import type { ResponseRow } from "@/lib/admin/types";
-import { createClient } from "@/lib/supabase/server";
+import { createAdminClient } from "@/lib/supabase/admin";
 
 export const metadata = { title: "Response" };
 
@@ -11,7 +11,7 @@ export default async function ResponseDetailPage({ params }: { params: Promise<{
   const { id } = await params;
   if (!z.uuid().safeParse(id).success) notFound();
 
-  const supabase = await createClient();
+  const supabase = createAdminClient();
   const { data } = await supabase.from("feedback_responses").select("*").eq("id", id).maybeSingle();
   if (!data) notFound();
 
