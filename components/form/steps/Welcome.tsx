@@ -27,7 +27,7 @@ export function Welcome({ next, set, state }: StepProps) {
       >
         <LockMeter percent={0} size={36} showLabel={false} />
         <div>
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ring">Your thank-you</p>
+          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-ring">And it unlocks</p>
           <p className="mt-1 text-base leading-snug text-cream">
             The Google Maps Lead Scraper, worth $50,{" "}
             <em className="relative inline-block font-display text-lg text-peach">
