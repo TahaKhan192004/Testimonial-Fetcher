@@ -1,0 +1,79 @@
+@import "tailwindcss";
+
+/* AI Savvy Founders tokens, taken from the brand design system */
+@theme {
+  --color-ink: #1c0e0b;
+  --color-ink-2: #271512;
+  --color-ink-3: #33201b;
+  --color-cream: #fff9f1;
+  --color-warm: #f3e9df;
+  --color-terracotta: #7a1f2b;
+  --color-ring: #ca8e79;
+  --color-peach: #ffb285;
+  --color-line: rgba(255, 249, 241, 0.12);
+
+  --font-display: var(--font-newsreader), Georgia, "Times New Roman", serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body {
+  background: var(--color-ink);
+  color: var(--color-cream);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  min-height: 100dvh;
+}
+
+::selection {
+  background: var(--color-peach);
+  color: var(--color-ink);
+}
+
+/* One accent, always visible focus */
+:focus-visible {
+  outline: 2px solid var(--color-peach);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.font-display {
+  font-family: var(--font-display);
+  letter-spacing: -0.02em;
+}
+
+/* Brick wall texture for the blocker step */
+.wall {
+  background-color: rgba(255, 249, 241, 0.04);
+  background-image:
+    linear-gradient(rgba(255, 249, 241, 0.09) 2px, transparent 2px),
+    linear-gradient(90deg, rgba(255, 249, 241, 0.09) 2px, transparent 2px);
+  background-size: 100% 22px, 44px 22px;
+}
+
+.sr-only-fields {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
